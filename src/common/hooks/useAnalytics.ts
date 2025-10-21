@@ -2,6 +2,7 @@
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
+import { QUERY_CONFIG } from '../constants';
 
 interface AnalyticsData {
   totalViews: number;
@@ -24,18 +25,18 @@ export const useAnalytics = (
     queryKey: ['analytics', brands, products],
     queryFn: async () => {
       const params = new URLSearchParams();
-      brands.forEach(brand => params.append('brands', brand));
-      products.forEach(product => params.append('products', product));
+      brands.forEach((brand) => params.append('brands', brand));
+      products.forEach((product) => params.append('products', product));
 
       const { data } = await axios.get<AnalyticsData>(
         `/api/analytics?${params.toString()}`
       );
       return data;
     },
-    staleTime: 5 * 60 * 1000, // 5 minutes - analytics data doesn't change frequently
-    gcTime: 10 * 60 * 1000, // 10 minutes - keep in cache
-    retry: 2,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    staleTime: QUERY_CONFIG.STALE_TIME,
+    gcTime: QUERY_CONFIG.GC_TIME,
+    retry: QUERY_CONFIG.RETRY_ATTEMPTS,
+    retryDelay: QUERY_CONFIG.RETRY_DELAY,
   });
 };
 
