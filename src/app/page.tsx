@@ -213,7 +213,10 @@ export default function Home() {
 
           {/* Filter Button */}
           <button 
-            onClick={() => setIsFilterModalOpen(!isFilterModalOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFilterModalOpen(!isFilterModalOpen);
+            }}
             className="flex w-12 h-12 justify-center items-center rounded-[24px] bg-[#EFEDF4] border-none cursor-pointer hover:bg-[#e0dde8] transition-colors"
           >
             <Image 
@@ -227,7 +230,7 @@ export default function Home() {
 
         {/* Filter Modal - Mobile/Tablet */}
         {isFilterModalOpen && (
-          <div ref={filterModalRef} className="lg:hidden mb-4 flex w-full p-4 flex-col items-start gap-4 rounded-xl bg-white relative z-40">
+          <div ref={filterModalRef} className="lg:hidden mb-4 flex w-full p-4 flex-col items-start gap-4 rounded-xl bg-white relative z-40" onClick={(e) => e.stopPropagation()}>
             {/* Filter by Label */}
             <div className="self-stretch">
               <label className="block text-navy-700 font-sans text-sm font-normal leading-[18px] mb-2">
