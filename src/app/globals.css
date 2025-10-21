@@ -21,6 +21,7 @@
   
   --navy-100: #EFEDF4;
   --navy-300: #B5ABD3;
+  --navy-400: #6B59A0;
   --navy-500: #2C1277;
   --navy-700: #080218;
 }
@@ -28,7 +29,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-mulish);
   --font-mono: var(--font-geist-mono);
   
   /* Custom color theme */
@@ -48,6 +49,7 @@
   
   --color-navy-100: var(--navy-100);
   --color-navy-300: var(--navy-300);
+  --color-navy-400: var(--navy-400);
   --color-navy-500: var(--navy-500);
   --color-navy-700: var(--navy-700);
 }
@@ -66,7 +68,7 @@ body {
 }
 
 /* Ensure all text elements inherit the navy-700 color by default */
-h1, h2, h3, h4, h5, h6, p, span, div, label {
+h1, h2, h3, h4, h5, h6, p, div, label {
   color: inherit;
 }
 
@@ -104,4 +106,27 @@ input[type="date"]:focus {
 
 input[type="date"]:not(:placeholder-shown) {
   color: #000000 !important;
+}
+
+/* Custom Checkbox Styling */
+input[type="checkbox"] {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 4px !important;
+  border: 1px solid #080218 !important;
+  cursor: pointer;
+  accent-color: #FA0F9C;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #FA0F9C;
+  border-color: #FA0F9C;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 4C0 1.79086 1.79086 0 4 0H12C14.2091 0 16 1.79086 16 4V12C16 14.2091 14.2091 16 12 16H4C1.79086 16 0 14.2091 0 12V4Z' fill='%23FA0F9C'/%3E%3Cpath d='M11.0688 5.46719L6.16638 10.3697L4.66885 8.57266' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }

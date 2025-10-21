@@ -73,24 +73,38 @@ export const useFilterStore = create<FilterState>((set) => ({
 
   // Filter Actions
   handleBrandChange: (brand: string) =>
-    set((state) => ({
-      selectedBrands:
-        brand === 'All'
-          ? []
-          : state.selectedBrands.includes(brand)
+    set((state) => {
+      const { BRANDS } = require('../constants');
+      if (brand === 'None') {
+        return { selectedBrands: [] };
+      } else if (brand === 'All') {
+        return { selectedBrands: BRANDS };
+      } else {
+        const isSelected = state.selectedBrands.includes(brand);
+        return {
+          selectedBrands: isSelected
             ? state.selectedBrands.filter((b) => b !== brand)
             : [...state.selectedBrands, brand],
-    })),
+        };
+      }
+    }),
 
   handleProductChange: (product: string) =>
-    set((state) => ({
-      selectedProducts:
-        product === 'All'
-          ? []
-          : state.selectedProducts.includes(product)
+    set((state) => {
+      const { PRODUCTS } = require('../constants');
+      if (product === 'None') {
+        return { selectedProducts: [] };
+      } else if (product === 'All') {
+        return { selectedProducts: PRODUCTS };
+      } else {
+        const isSelected = state.selectedProducts.includes(product);
+        return {
+          selectedProducts: isSelected
             ? state.selectedProducts.filter((p) => p !== product)
             : [...state.selectedProducts, product],
-    })),
+        };
+      }
+    }),
 
   removeAppliedFilter: (type: 'brand' | 'product', value: string) =>
     set((state) => ({

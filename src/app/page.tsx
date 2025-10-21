@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useAnalytics } from '~/common/hooks/useAnalytics';
 import { useFilterStore } from '~/common/stores/filterStore';
 import { SkeletonLoader } from '~/common/components/ui/Skeleton';
-import { Button } from '~/common/components/ui/Button';
 import {
   CONFIG,
   BRANDS,
@@ -40,8 +39,6 @@ export default function Home() {
     removeAppliedFilter,
     deleteAllFilters,
     applyFilters,
-    setStartDate,
-    setEndDate,
     setCurrentMonth,
     applyDateRange,
   } = useFilterStore();
@@ -118,27 +115,19 @@ export default function Home() {
 
             {/* Hamburger Menu with Dropdown */}
             <div className="relative" ref={dropdownRef}>
-              <Button
+              <button
                 onClick={toggleDropdown}
-                variant="ghost"
-                isOnlyIcon
-                size="md"
-                className="rounded-full! bg-purple-200 hover:bg-purple-300 border-purple-200!"
+                className={`flex w-10 h-10 p-3 justify-center items-center gap-2.5 rounded-3xl transition-colors border-none cursor-pointer ${
+                  isDropdownOpen ? 'bg-navy-300' : 'bg-navy-100 hover:bg-navy-300'
+                }`}
               >
-                <svg
-                  className="h-6 w-6 text-gray-700"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              </Button>
+                <Image 
+                  src="/menu-icon.svg" 
+                  alt="Menu" 
+                  width={16}
+                  height={16}
+                />
+              </button>
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
@@ -146,40 +135,28 @@ export default function Home() {
                   <div className="py-1">
                     <button
                       onClick={handleBackToApp}
-                      className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors text-navy-700"
+                      className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors text-navy-700 cursor-pointer"
                     >
-                      <svg
-                        className="w-4 h-4 mr-3 text-gray-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                        />
-                      </svg>
+                      <Image 
+                        src="/back-button.svg" 
+                        alt="Back" 
+                        width={19}
+                        height={15}
+                        className="mr-3"
+                      />
                       Back to expeerly app
                     </button>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors text-navy-700"
+                      className="flex items-center w-full px-4 py-2 text-sm hover:bg-gray-100 transition-colors text-navy-700 cursor-pointer"
                     >
-                      <svg
-                        className="w-4 h-4 mr-3 text-gray-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                        />
-                      </svg>
+                      <Image 
+                        src="/logout-button.svg" 
+                        alt="Logout" 
+                        width={22}
+                        height={22}
+                        className="mr-3"
+                      />
                       Logout
                     </button>
                   </div>
@@ -192,7 +169,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 items-start">
           {/* Left Sidebar - Filters */}
           <div className="lg:col-span-1 -ml-20">
             <h1 className="mb-6 text-navy-700 font-sans text-[30px] font-extrabold leading-[46px]">
@@ -200,146 +177,98 @@ export default function Home() {
             </h1>
 
             {/* Filter Container with exact specs */}
-            <div className="flex w-[328px] p-4 flex-col items-start gap-4 rounded-xl bg-white">
+            <div className="flex w-[328px] p-4 flex-col items-start gap-4 rounded-xl bg-white relative">
               {/* Date Range Container */}
-              <div className="rounded-lg border border-grey-300 bg-white flex flex-col items-start gap-1 self-stretch p-3 px-4 relative">
-                <div className="flex items-center justify-between self-stretch cursor-pointer">
+              <div className="rounded-lg border border-grey-300 bg-white flex flex-col items-start gap-1 self-stretch px-4 py-4">
+                <div 
+                  className="flex items-center justify-between self-stretch cursor-pointer"
+                  onClick={openDateModal}
+                >
                   <span className="text-navy-700 font-sans text-sm font-normal leading-5">
                     {startDate && endDate ? `${startDate} - ${endDate}` : 'Sept 2025 - Sept 2025'}
                   </span>
-                  <button
-                    onClick={openDateModal}
-                    className="bg-transparent border-none cursor-pointer p-0 flex items-center justify-center"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                      <path d="M16.7495 9.08365H3.25016V16.6667C3.25016 17.1729 3.66024 17.583 4.1665 17.583H15.8332C16.3394 17.583 16.7495 17.1729 16.7495 16.6667V9.08365ZM12.5828 4.99999V4.08365H7.41683V4.99999C7.41683 5.41421 7.08072 5.75032 6.6665 5.75032C6.25229 5.75032 5.91618 5.41421 5.91618 4.99999V4.08365H4.1665C3.66024 4.08365 3.25016 4.49373 3.25016 4.99999V7.583H16.7495V4.99999C16.7495 4.49373 16.3394 4.08365 15.8332 4.08365H14.0835V4.99999C14.0835 5.41421 13.7474 5.75032 13.3332 5.75032C12.919 5.75032 12.5828 5.41421 12.5828 4.99999ZM18.2502 16.6667C18.2502 18.0013 17.1679 19.0837 15.8332 19.0837H4.1665C2.83182 19.0837 1.74951 18.0013 1.74951 16.6667V4.99999C1.74951 3.66531 2.83182 2.583 4.1665 2.583H5.91618V1.66666C5.91618 1.25245 6.25229 0.916336 6.6665 0.916336C7.08072 0.916336 7.41683 1.25245 7.41683 1.66666V2.583H12.5828V1.66666C12.5828 1.25245 12.919 0.916336 13.3332 0.916336C13.7474 0.916336 14.0835 1.25245 14.0835 1.66666V2.583H15.8332C17.1679 2.583 18.2502 3.66531 18.2502 4.99999V16.6667Z" fill="#080218"/>
-                    </svg>
-                  </button>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M16.7495 9.08365H3.25016V16.6667C3.25016 17.1729 3.66024 17.583 4.1665 17.583H15.8332C16.3394 17.583 16.7495 17.1729 16.7495 16.6667V9.08365ZM12.5828 4.99999V4.08365H7.41683V4.99999C7.41683 5.41421 7.08072 5.75032 6.6665 5.75032C6.25229 5.75032 5.91618 5.41421 5.91618 4.99999V4.08365H4.1665C3.66024 4.08365 3.25016 4.49373 3.25016 4.99999V7.583H16.7495V4.99999C16.7495 4.49373 16.3394 4.08365 15.8332 4.08365H14.0835V4.99999C14.0835 5.41421 13.7474 5.75032 13.3332 5.75032C12.919 5.75032 12.5828 5.41421 12.5828 4.99999ZM18.2502 16.6667C18.2502 18.0013 17.1679 19.0837 15.8332 19.0837H4.1665C2.83182 19.0837 1.74951 18.0013 1.74951 16.6667V4.99999C1.74951 3.66531 2.83182 2.583 4.1665 2.583H5.91618V1.66666C5.91618 1.25245 6.25229 0.916336 6.6665 0.916336C7.08072 0.916336 7.41683 1.25245 7.41683 1.66666V2.583H12.5828V1.66666C12.5828 1.25245 12.919 0.916336 13.3332 0.916336C13.7474 0.916336 14.0835 1.25245 14.0835 1.66666V2.583H15.8332C17.1679 2.583 18.2502 3.66531 18.2502 4.99999V16.6667Z" fill="#080218"/>
+                  </svg>
                 </div>
+              </div>
 
-                {/* Date Range Popover */}
-                {isDateModalOpen && (
-                  <div className="absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 z-50 p-5 w-80">
-                    {/* Modal Header */}
-                    <div className="flex justify-between items-center mb-5">
-                      <h3 className="text-sm font-semibold text-navy-700">
-                        Date range
-                      </h3>
-                      <button
-                        onClick={closeDateModal}
-                        className="text-gray-400 hover:text-gray-600 p-1"
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
-                      </button>
+              {/* Date Range Popover - Positioned relative to filter container */}
+              {isDateModalOpen && (
+                <div className="absolute top-[76px] left-4 flex w-[296px] p-4 flex-col items-start gap-4 rounded-xl border border-grey-300 bg-white z-50 shadow-lg">
+                  {/* Modal Header */}
+                  <div className="flex justify-between items-center self-stretch">
+                    <h3 className="text-navy-700 font-sans text-base font-bold leading-5">
+                      Date range
+                    </h3>
+                    <button
+                      onClick={closeDateModal}
+                      className="flex w-8 h-8 p-1.5 justify-center items-center gap-2.5 rounded-3xl bg-navy-100 border-none cursor-pointer hover:bg-navy-200 transition-colors"
+                    >
+                      <Image 
+                        src="/cross.svg" 
+                        alt="Close" 
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Month Selection Inputs */}
+                  <div className="flex items-center gap-2 self-stretch">
+                    <div className="flex flex-col items-start gap-1 flex-1 px-3 py-2 rounded-lg border border-grey-300">
+                      <label className="text-navy-700 font-sans text-sm font-normal leading-5">
+                        July 2025
+                      </label>
                     </div>
-
-                    {/* Date Input Fields */}
-                    <div className="mb-5">
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs font-medium block mb-2 text-navy-700">
-                            Start date
-                          </label>
-                          <input
-                            type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-black scheme-light"
-                            placeholder="dd-mm-yyyy"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium block mb-2 text-navy-700">
-                            End date
-                          </label>
-                          <input
-                            type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm text-black scheme-light"
-                            placeholder="dd-mm-yyyy"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Month Navigation */}
-                    <div className="flex items-center justify-center mb-5 bg-gray-50 rounded-lg p-3">
-                      <button
-                        onClick={() => handleNavigateMonth('prev')}
-                        className="p-1 hover:bg-gray-200 rounded-md transition-colors"
-                      >
-                        <svg
-                          className="w-5 h-5 text-navy-700"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 19l-7-7 7-7"
-                          />
-                        </svg>
-                      </button>
-                      <span className="mx-4 text-sm font-medium text-navy-700">
-                        {currentMonth}
-                      </span>
-                      <button
-                        onClick={() => handleNavigateMonth('next')}
-                        className="p-1 hover:bg-gray-200 rounded-md transition-colors"
-                      >
-                        <svg
-                          className="w-5 h-5 text-navy-700"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3">
-                      <Button
-                        onClick={handleApplyDateRange}
-                        variant="primary"
-                        size="md"
-                        className="flex-1 rounded-md!"
-                      >
-                        Apply
-                      </Button>
-                      <Button
-                        onClick={closeDateModal}
-                        variant="outline"
-                        size="md"
-                        className="flex-1 rounded-md! border-gray-300! text-gray-600! hover:bg-gray-50!"
-                      >
-                        Cancel
-                      </Button>
+                    <div className="w-4 h-px bg-grey-300"></div>
+                    <div className="flex flex-col items-start gap-1 flex-1 px-3 py-2 rounded-lg border border-grey-300">
+                      <label className="text-navy-400 font-sans text-sm font-normal leading-5">
+                        Sept 2025
+                      </label>
                     </div>
                   </div>
-                )}
-              </div>
+
+                  {/* Month Navigation */}
+                  <div className="flex items-center justify-between self-stretch">
+                    <button
+                      onClick={() => handleNavigateMonth('prev')}
+                      className="p-1 hover:bg-grey-100 rounded-md transition-colors border-none bg-transparent cursor-pointer"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 18L9 12L15 6" stroke="#080218" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    <span className="text-navy-700 text-center font-sans text-base font-bold leading-5">
+                      July 2025
+                    </span>
+                    <button
+                      onClick={() => handleNavigateMonth('next')}
+                      className="p-1 hover:bg-grey-100 rounded-md transition-colors border-none bg-transparent cursor-pointer"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 18L15 12L9 6" stroke="#080218" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-start gap-2 self-stretch">
+                    <button
+                      onClick={handleApplyDateRange}
+                      className="flex h-12 px-6 justify-center items-center gap-2.5 flex-1 rounded-xl bg-grey-300 border-none cursor-pointer text-white text-center font-sans text-base font-bold leading-normal hover:bg-grey-500 transition-colors"
+                    >
+                      Apply
+                    </button>
+                    <button
+                      onClick={closeDateModal}
+                      className="flex h-12 px-6 justify-center items-center gap-2.5 flex-1 rounded-xl bg-white border-2 border-grey-300 cursor-pointer text-grey-300 text-center font-sans text-base font-bold leading-normal hover:bg-grey-100 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Filter by Label */}
               <div className="self-stretch">
@@ -348,96 +277,104 @@ export default function Home() {
                 </label>
 
                 {/* Brand Dropdown */}
-                <div 
-                  className="flex h-8 px-4 justify-between items-center gap-2.5 self-stretch rounded-lg border-2 border-pink-500 mb-2 cursor-pointer bg-white relative"
-                  onClick={toggleBrandSection}
-                >
-                  <span className="text-pink-500 font-sans text-sm font-bold leading-5">
-                    Brand
-                  </span>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 16 16" 
-                    fill="none"
-                    className={`transition-transform duration-200 ${isProductOpen ? 'rotate-180' : 'rotate-0'}`}
+                <div className="mb-2">
+                  <div 
+                    className={`flex px-4 justify-between items-center gap-2.5 self-stretch border-2 border-pink-500 cursor-pointer bg-white relative ${
+                      isBrandOpen ? 'rounded-t-lg border-b-0' : 'rounded-lg h-8'
+                    }`}
+                    onClick={toggleBrandSection}
                   >
-                    <path d="M4 6L8 10L12 6" stroke="#FA0F9C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
+                    <span className="text-pink-500 font-sans text-sm font-bold leading-5 py-2">
+                      Brand
+                    </span>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 16 16" 
+                      fill="none"
+                      className={`transition-transform duration-200 ${isBrandOpen ? 'rotate-180' : 'rotate-0'}`}
+                    >
+                      <path d="M4 6L8 10L12 6" stroke="#FA0F9C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
 
-                {/* Brand Filter Section - Expanded */}
-                {isBrandOpen && (
-                  <div className="mb-2 rounded-lg border border-grey-300 bg-white p-2">
-                    <label className="flex items-center mb-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedBrands.length === 0}
-                        onChange={() => handleBrandChange('All')}
-                        className="mr-2 cursor-pointer accent-pink-500"
-                      />
-                      <span className="text-navy-700 font-sans text-sm font-normal leading-5">All</span>
-                    </label>
-                    {BRANDS.map((brand) => (
-                      <label key={brand} className="flex items-center mb-2 cursor-pointer">
+                  {/* Brand Filter Section - Expanded inside border */}
+                  {isBrandOpen && (
+                    <div className="rounded-b-lg border-2 border-t-0 border-pink-500 bg-white p-3">
+                      <label className="flex items-center mb-2 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={selectedBrands.includes(brand)}
-                          onChange={() => handleBrandChange(brand)}
+                          checked={selectedBrands.length === BRANDS.length}
+                          onChange={() => handleBrandChange('All')}
                           className="mr-2 cursor-pointer accent-pink-500"
                         />
-                        <span className="text-navy-700 font-sans text-sm font-normal leading-5">{brand}</span>
+                        <span className="text-navy-700 font-sans text-sm font-normal leading-5">All</span>
                       </label>
-                    ))}
-                  </div>
-                )}
+                      {BRANDS.map((brand) => (
+                        <label key={brand} className="flex items-center mb-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={selectedBrands.includes(brand)}
+                            onChange={() => handleBrandChange(brand)}
+                            className="mr-2 cursor-pointer accent-pink-500"
+                          />
+                          <span className="text-navy-700 font-sans text-sm font-normal leading-5">{brand}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 {/* Product Dropdown */}
-                <div 
-                  className="flex h-8 px-4 justify-between items-center gap-2.5 self-stretch rounded-lg border-2 border-pink-500 cursor-pointer bg-white"
-                  onClick={toggleProductSection}
-                >
-                  <span className="text-pink-500 font-sans text-sm font-bold leading-5">
-                    Product
-                  </span>
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="16" 
-                    height="16" 
-                    viewBox="0 0 16 16" 
-                    fill="none"
-                    className={`transition-transform duration-200 ${isProductOpen ? 'rotate-180' : 'rotate-0'}`}
+                <div>
+                  <div 
+                    className={`flex px-4 justify-between items-center gap-2.5 self-stretch border-2 border-pink-500 cursor-pointer bg-white relative ${
+                      isProductOpen ? 'rounded-t-lg border-b-0' : 'rounded-lg h-8'
+                    }`}
+                    onClick={toggleProductSection}
                   >
-                    <path d="M4 6L8 10L12 6" stroke="#FA0F9C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
+                    <span className="text-pink-500 font-sans text-sm font-bold leading-5 py-2">
+                      Product
+                    </span>
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="16" 
+                      height="16" 
+                      viewBox="0 0 16 16" 
+                      fill="none"
+                      className={`transition-transform duration-200 ${isProductOpen ? 'rotate-180' : 'rotate-0'}`}
+                    >
+                      <path d="M4 6L8 10L12 6" stroke="#FA0F9C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
 
-                {/* Product Filter Section - Expanded */}
-                {isProductOpen && (
-                  <div className="mt-2 rounded-lg border border-grey-300 bg-white p-2">
-                    <label className="flex items-center mb-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedProducts.length === 0}
-                        onChange={() => handleProductChange('All')}
-                        className="mr-2 cursor-pointer accent-pink-500"
-                      />
-                      <span className="text-navy-700 font-sans text-sm font-normal leading-5">All</span>
-                    </label>
-                    {PRODUCTS.map((product) => (
-                      <label key={product} className="flex items-center mb-2 cursor-pointer">
+                  {/* Product Filter Section - Expanded inside border */}
+                  {isProductOpen && (
+                    <div className="rounded-b-lg border-2 border-t-0 border-pink-500 bg-white p-3">
+                      <label className="flex items-center mb-2 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={selectedProducts.includes(product)}
-                          onChange={() => handleProductChange(product)}
+                          checked={selectedProducts.length === PRODUCTS.length}
+                          onChange={() => handleProductChange('All')}
                           className="mr-2 cursor-pointer accent-pink-500"
                         />
-                        <span className="text-navy-700 font-sans text-sm font-normal leading-5">{product}</span>
+                        <span className="text-navy-700 font-sans text-sm font-normal leading-5">All</span>
                       </label>
-                    ))}
-                  </div>
-                )}
+                      {PRODUCTS.map((product) => (
+                        <label key={product} className="flex items-center mb-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={selectedProducts.includes(product)}
+                            onChange={() => handleProductChange(product)}
+                            className="mr-2 cursor-pointer accent-pink-500"
+                          />
+                          <span className="text-navy-700 font-sans text-sm font-normal leading-5">{product}</span>
+                        </label>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Applied Filters Display */}
@@ -446,7 +383,7 @@ export default function Home() {
                   {selectedBrands.map((brand) => (
                     <span
                       key={brand}
-                      className="inline-flex items-center pl-2 pr-1 rounded-2xl text-xs font-medium bg-grey-300 text-navy-700 gap-1"
+                      className="inline-flex items-center px-3 py-1.5 rounded-[56px] text-sm font-normal leading-5 bg-navy-100 border border-navy-300 text-navy-700 gap-2"
                     >
                       {brand}
                       <button
@@ -462,7 +399,7 @@ export default function Home() {
                   {selectedProducts.map((product) => (
                     <span
                       key={product}
-                      className="inline-flex items-center pl-2 pr-1 rounded-2xl text-xs font-medium bg-grey-300 text-navy-700 gap-1"
+                      className="inline-flex items-center px-3 py-1.5 rounded-[56px] text-sm font-normal leading-5 bg-navy-100 border border-navy-300 text-navy-700 gap-2"
                     >
                       {product}
                       <button
@@ -483,14 +420,13 @@ export default function Home() {
                 {/* Apply Button */}
                 <button
                   onClick={applyFilters}
-                  disabled={selectedBrands.length === 0 && selectedProducts.length === 0}
-                  className={`flex h-12 justify-center items-center gap-2.5 self-stretch rounded-xl border-none text-center font-sans text-base font-bold leading-normal transition-all duration-200 ${
-                    selectedBrands.length === 0 && selectedProducts.length === 0
-                      ? 'px-6 bg-grey-300 text-navy-700 cursor-not-allowed'
-                      : 'px-5 bg-pink-500 text-white cursor-pointer'
+                  className={`flex h-12 px-5 justify-center items-center gap-2.5 self-stretch rounded-xl border-none text-center font-sans text-base font-bold leading-normal transition-all duration-200 text-white ${
+                    selectedBrands.length + selectedProducts.length === 0
+                      ? 'bg-grey-300 cursor-not-allowed'
+                      : 'bg-pink-500 cursor-pointer'
                   }`}
                 >
-                  Apply ({selectedBrands.length + selectedProducts.length})
+                  Apply{selectedBrands.length + selectedProducts.length > 0 ? ` (${selectedBrands.length + selectedProducts.length})` : ''}
                 </button>
 
                 {/* Delete All Button */}
@@ -505,11 +441,11 @@ export default function Home() {
           </div>
 
           {/* Right Panel - Analytics Data */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-3 flex flex-col">
             {isLoading ? (
               <SkeletonLoader />
             ) : isError ? (
-              <div className="bg-white rounded-lg shadow-sm p-6 text-center py-8">
+              <div className="bg-white rounded-lg shadow-sm p-6 text-center py-8 h-full">
                 <p className="text-red-600 font-semibold mb-2">
                   Error loading analytics
                 </p>
@@ -520,7 +456,7 @@ export default function Home() {
                 </p>
               </div>
             ) : analyticsData ? (
-              <div className="rounded-xl bg-white flex w-[792px] p-10 flex-col justify-end items-end gap-3">
+              <div className="rounded-xl bg-white flex w-[792px] p-10 flex-col items-start gap-3 h-full">
                 <div className="flex flex-col gap-4 w-full">
                   {/* Total Video Views Box */}
                   <div className="rounded-lg border border-navy-300 bg-white p-4">
