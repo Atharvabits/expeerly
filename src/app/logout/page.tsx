@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 
 export default function LogoutPage() {
   const handleGoToApp = () => {
@@ -9,23 +8,23 @@ export default function LogoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-purple-50 flex items-center justify-center p-4">
       {/* Main Content Area */}
-      <div className="bg-gray-200 rounded-lg p-8 max-w-md w-full text-center">
+      <div className="text-center max-w-md">
         {/* Main Message */}
-        <h1 className="text-2xl font-bold text-gray-800 mb-4">
+        <h1 className="text-3xl font-bold mb-4" style={{ color: '#080218' }}>
           You can now close this window.
         </h1>
         
         {/* Instructional Text */}
-        <p className="text-gray-700 mb-6 leading-relaxed">
-          If you want to open your analytics page again, please go back to app.expeerly.com and in the top right menu click "Analytics"
+        <p className="mb-8 leading-relaxed text-sm" style={{ color: '#080218' }}>
+          If you want to open your analytics page again, please go back to app.expeerly.com and in the top right menu click &quot;Analytics&quot;
         </p>
         
         {/* Call to Action Button */}
         <button
           onClick={handleGoToApp}
-          className="w-full bg-pink-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-pink-600 transition-colors"
+          className="bg-pink-500 hover:bg-pink-600 text-white py-3 px-8 rounded-full font-semibold transition-colors"
         >
           Go to expeerly app
         </button>
