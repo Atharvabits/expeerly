@@ -22,10 +22,10 @@ export const Skeleton: FunctionComponent<SkeletonProps> = ({
     circular: 'rounded-full',
   };
 
-  const style = {
-    width: typeof width === 'number' ? `${width}px` : width,
-    height: typeof height === 'number' ? `${height}px` : height,
-  };
+  const style = width || height ? {
+    ...(width ? { width: typeof width === 'number' ? `${width}px` : width } : {}),
+    ...(height ? { height: typeof height === 'number' ? `${height}px` : height } : {}),
+  } : undefined;
 
   return (
     <div

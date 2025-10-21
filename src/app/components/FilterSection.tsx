@@ -1,7 +1,6 @@
 'use client';
 
 import { FunctionComponent } from 'react';
-import { THEME } from '~/common/constants';
 import { Button } from '~/common/components/ui/Button';
 
 interface FilterSectionProps {
@@ -28,18 +27,13 @@ export const FilterSection: FunctionComponent<FilterSectionProps> = ({
         variant="outline"
         size="sm"
         fullWidth
-        className="!justify-between rounded-md! px-3 py-2 text-sm font-medium"
-        style={{
-          borderColor: THEME.ACCENT_BORDER,
-          color: THEME.PRIMARY_TEXT_COLOR,
-        }}
+        className="justify-between! rounded-md! px-3 py-2 text-sm font-medium border-pink-300 text-navy-700"
         endContent={
           <svg
-            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            className={`h-4 w-4 transition-transform text-pink-500 ${isOpen ? 'rotate-180' : ''}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            style={{ color: THEME.ACCENT_COLOR }}
           >
             <path
               strokeLinecap="round"
@@ -60,12 +54,9 @@ export const FilterSection: FunctionComponent<FilterSectionProps> = ({
               type="checkbox"
               checked={selectedItems.length === 0}
               onChange={() => onItemChange('All')}
-              className={`mr-2 rounded`}
-              style={{
-                accentColor: THEME.ACCENT_COLOR,
-              }}
+              className="mr-2 rounded accent-pink-500"
             />
-            <span style={{ color: THEME.PRIMARY_TEXT_COLOR }}>All</span>
+            <span className="text-navy-700">All</span>
           </label>
           {items.map((item) => (
             <label key={item} className="flex items-center">
@@ -73,12 +64,9 @@ export const FilterSection: FunctionComponent<FilterSectionProps> = ({
                 type="checkbox"
                 checked={selectedItems.includes(item)}
                 onChange={() => onItemChange(item)}
-                className={`mr-2 rounded`}
-                style={{
-                  accentColor: THEME.ACCENT_COLOR,
-                }}
+                className="mr-2 rounded accent-pink-500"
               />
-              <span style={{ color: THEME.PRIMARY_TEXT_COLOR }}>{item}</span>
+              <span className="text-navy-700">{item}</span>
             </label>
           ))}
         </div>

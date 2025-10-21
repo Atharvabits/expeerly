@@ -18,6 +18,7 @@ const config: Config = {
       },
       colors: {
         pink: {
+          300: '#FDB1D7',
           500: '#FA0F9C',
           600: '#DE1777',
           700: '#C6186B',
@@ -30,11 +31,14 @@ const config: Config = {
           700: '#0E0E0F',
         },
         blue: {
+          100: '#F4F4FF',
           500: '#4B49EB',
         },
         navy: {
           100: '#EFEDF4',
+          300: '#B5ABD3',
           500: '#2C1277',
+          700: '#080218',
         },
         yellow: {
           500: '#FFC122',

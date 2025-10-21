@@ -3,6 +3,26 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Custom colors */
+  --pink-300: #FDB1D7;
+  --pink-500: #FA0F9C;
+  --pink-600: #DE1777;
+  --pink-700: #C6186B;
+  
+  --grey-100: #F7F7F7;
+  --grey-200: #E8E8EA;
+  --grey-300: #D1D1D4;
+  --grey-500: #8D8B94;
+  --grey-700: #0E0E0F;
+  
+  --blue-100: #F4F4FF;
+  --blue-500: #4B49EB;
+  
+  --navy-100: #EFEDF4;
+  --navy-300: #B5ABD3;
+  --navy-500: #2C1277;
+  --navy-700: #080218;
 }
 
 @theme inline {
@@ -10,6 +30,26 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom color theme */
+  --color-pink-300: var(--pink-300);
+  --color-pink-500: var(--pink-500);
+  --color-pink-600: var(--pink-600);
+  --color-pink-700: var(--pink-700);
+  
+  --color-grey-100: var(--grey-100);
+  --color-grey-200: var(--grey-200);
+  --color-grey-300: var(--grey-300);
+  --color-grey-500: var(--grey-500);
+  --color-grey-700: var(--grey-700);
+  
+  --color-blue-100: var(--blue-100);
+  --color-blue-500: var(--blue-500);
+  
+  --color-navy-100: var(--navy-100);
+  --color-navy-300: var(--navy-300);
+  --color-navy-500: var(--navy-500);
+  --color-navy-700: var(--navy-700);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,8 +61,13 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: #080218;
   font-family: var(--font-mulish), Arial, Helvetica, sans-serif;
+}
+
+/* Ensure all text elements inherit the navy-700 color by default */
+h1, h2, h3, h4, h5, h6, p, span, div, label {
+  color: inherit;
 }
 
 /* Date input styling */
