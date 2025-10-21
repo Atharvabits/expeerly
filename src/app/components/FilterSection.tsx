@@ -1,6 +1,8 @@
 'use client';
 
+import { FunctionComponent } from 'react';
 import { THEME } from '~/common/constants';
+import { Button } from '~/common/components/ui/Button';
 
 interface FilterSectionProps {
   title: string;
@@ -11,7 +13,7 @@ interface FilterSectionProps {
   onItemChange: (item: string) => void;
 }
 
-export const FilterSection: React.FC<FilterSectionProps> = ({
+export const FilterSection: FunctionComponent<FilterSectionProps> = ({
   title,
   isOpen,
   onToggle,
@@ -21,30 +23,35 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 }) => {
   return (
     <div className="mb-3">
-      <button
+      <Button
         onClick={onToggle}
-        className={`w-full flex items-center justify-between px-3 py-2 border-2 rounded-md hover:bg-${THEME.ACCENT_LIGHT} transition-colors text-sm`}
+        variant="outline"
+        size="sm"
+        fullWidth
+        className="!justify-between rounded-md! px-3 py-2 text-sm font-medium"
         style={{
           borderColor: THEME.ACCENT_BORDER,
           color: THEME.PRIMARY_TEXT_COLOR,
         }}
+        endContent={
+          <svg
+            className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            style={{ color: THEME.ACCENT_COLOR }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        }
       >
-        <span className="font-medium">{title}</span>
-        <svg
-          className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          style={{ color: THEME.ACCENT_COLOR }}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
+        {title}
+      </Button>
 
       {isOpen && (
         <div className="mt-2 space-y-2 pl-2 text-sm">

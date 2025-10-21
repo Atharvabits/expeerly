@@ -1,5 +1,6 @@
 'use client';
 
+import { Button } from '~/common/components/ui/Button';
 
 export default function LogoutPage() {
   const handleGoToApp = () => {
@@ -22,12 +23,14 @@ export default function LogoutPage() {
         </p>
         
         {/* Call to Action Button */}
-        <button
+        <Button
           onClick={handleGoToApp}
-          className="bg-pink-500 hover:bg-pink-600 text-white py-3 px-8 rounded-full font-semibold transition-colors"
+          variant="primary"
+          size="lg"
+          className="px-8"
         >
           Go to expeerly app
-        </button>
+        </Button>
       </div>
     </div>
   );

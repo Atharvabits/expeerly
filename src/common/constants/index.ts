@@ -10,8 +10,8 @@ export const THEME = {
 };
 
 export const DEFAULT_FILTERS = {
-  BRANDS: ['Koenig'],
-  PRODUCTS: ['Airfryer'],
+  BRANDS: [],
+  PRODUCTS: [],
 };
 
 export const BRANDS = ['Koenig', 'Turmix'];
